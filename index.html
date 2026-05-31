@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Very Important Question 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #e8637a;
+    --blush: #f9dde2;
+    --cream: #fdf6f0;
+    --deep: #2a1a1f;
+    --gold: #c9956a;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Soft petal background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 20%, #fce4ec88 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, #ffe0b288 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 30%, #f8bbd088 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Floating hearts */
+  .hearts-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .heart-float {
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: floatUp var(--dur) ease-in var(--delay) infinite;
+    left: var(--x);
+  }
+
+  @keyframes floatUp {
+    0%   { opacity: 0;   transform: translateY(100vh) scale(0.5) rotate(0deg); }
+    10%  { opacity: 0.4; }
+    90%  { opacity: 0.2; }
+    100% { opacity: 0;   transform: translateY(-10vh) scale(1.2) rotate(20deg); }
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    background: white;
+    border-radius: 24px;
+    padding: 52px 56px 48px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow:
+      0 4px 6px rgba(232,99,122,0.06),
+      0 20px 60px rgba(232,99,122,0.12),
+      0 0 0 1px rgba(232,99,122,0.08);
+    z-index: 10;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, #e8637a33, #c9956a33, #e8637a33);
+    z-index: -1;
+  }
+
+  .emoji-top {
+    font-size: 3.2rem;
+    margin-bottom: 12px;
+    display: block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--deep);
+    line-height: 1.25;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  h1 em {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .subtitle {
+    color: #9e7a82;
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    margin-bottom: 36px;
+  }
+
+  .bear {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    display: block;
+    animation: bearBounce 3s ease-in-out infinite;
+    cursor: default;
+    user-select: none;
+  }
+
+  @keyframes bearBounce {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%       { transform: translateY(-8px) rotate(3deg); }
+  }
+
+  .message {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #6b4a52;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    padding: 0 8px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, var(--rose), #d94f68);
+    color: white;
+    border: none;
+    padding: 14px 44px;
+    border-radius: 50px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 20px rgba(232,99,122,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .btn-yes:hover {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 8px 28px rgba(232,99,122,0.45);
+  }
+
+  .btn-yes:active { transform: scale(0.97); }
+
+  .btn-no {
+    background: white;
+    color: #c4a0a8;
+    border: 1.5px solid #e8c5cc;
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: color 0.15s, border-color 0.15s;
+    position: fixed; /* fixed so it can roam freely */
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  /* Success screen */
+  .success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .success .big-emoji { font-size: 4rem; margin-bottom: 12px; }
+
+  .success h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--rose);
+    margin-bottom: 8px;
+  }
+
+  .success p {
+    color: #9e7a82;
+    font-size: 0.92rem;
+    font-weight: 300;
+  }
+
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -20px;
+    border-radius: 2px;
+    animation: confettiFall var(--dur2) ease-in var(--delay2) forwards;
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  @keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
+  }
+
+  .main-content { width: 100%; }
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="card">
+  <div class="main-content" id="mainContent">
+    <span class="bear">🧸</span>
+    <span class="emoji-top">💌</span>
+    <h1>Will you go on a <em>date</em> with me?</h1>
+    <p class="subtitle">a question that requires careful consideration</p>
+    <p class="message">
+      "You make ordinary moments feel like something worth remembering.
+      So… would you give me the honour of your company?"
+    </p>
+    <div class="buttons">
+      <button class="btn-yes" onclick="onYes()">Yes, absolutely! 🌹</button>
+      <button class="btn-no" id="noBtn" onmouseenter="runAway()" ontouchstart="runAway()">No thanks</button>
+    </div>
+  </div>
+
+  <div class="success" id="successScreen">
+    <div class="big-emoji">🎉</div>
+    <h2>She said YES! 💖</h2>
+    <p>Get ready for the best date ever ✨</p>
+  </div>
+</div>
+
+<script>
+  // --- Floating hearts background ---
+  const bg = document.getElementById('heartsBg');
+  const heartEmojis = ['🤍','🌸','💕','✨','🌷','💗','🍓'];
+  for (let i = 0; i < 22; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-float';
+    h.textContent = heartEmojis[i % heartEmojis.length];
+    h.style.setProperty('--x', Math.random() * 100 + 'vw');
+    h.style.setProperty('--dur', (6 + Math.random() * 10) + 's');
+    h.style.setProperty('--delay', (Math.random() * 12) + 's');
+    bg.appendChild(h);
+  }
+
+  // --- NO button escape logic ---
+  const noBtn = document.getElementById('noBtn');
+  let attempts = 0;
+
+  // Place the No button initially near the Yes button
+  function placeNoBtnInitial() {
+    const card = document.querySelector('.card');
+    const rect = card.getBoundingClientRect();
+    // Start positioned to the right of Yes button
+    noBtn.style.left = (rect.left + rect.width / 2 + 80) + 'px';
+    noBtn.style.top  = (rect.top  + rect.height - 80) + 'px';
+  }
+  placeNoBtnInitial();
+
+  function runAway() {
+    attempts++;
+    const btnW = noBtn.offsetWidth;
+    const btnH = noBtn.offsetHeight;
+    const margin = 20;
+
+    const maxX = window.innerWidth  - btnW - margin;
+    const maxY = window.innerHeight - btnH - margin;
+
+    // Pick a random spot far from current position
+    let newX, newY, tries = 0;
+    do {
+      newX = margin + Math.random() * maxX;
+      newY = margin + Math.random() * maxY;
+      tries++;
+    } while (
+      tries < 30 &&
+      Math.abs(newX - parseFloat(noBtn.style.left)) < 120 &&
+      Math.abs(newY - parseFloat(noBtn.style.top))  < 80
+    );
+
+    noBtn.style.transition = 'left 0.15s ease, top 0.15s ease, font-size 0.3s';
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top  = newY + 'px';
+
+    // Shrink the No button a little each attempt
+    const size = Math.max(0.6, 1 - attempts * 0.04);
+    noBtn.style.fontSize = (0.95 * size) + 'rem';
+    noBtn.style.padding  = (13 * size) + 'px ' + (32 * size) + 'px';
+
+    if (attempts >= 8) {
+      noBtn.textContent = 'Still no…?';
+    }
+    if (attempts >= 14) {
+      noBtn.textContent = 'Really?? 🥺';
+    }
+    if (attempts >= 20) {
+      noBtn.style.opacity = '0.3';
+      noBtn.textContent = '…fine 😔';
+    }
+  }
+
+  // Also handle window resize
+  window.addEventListener('resize', placeNoBtnInitial);
+
+  // --- YES ---
+  function onYes() {
+    document.getElementById('mainContent').style.display = 'none';
+    noBtn.style.display = 'none';
+    const s = document.getElementById('successScreen');
+    s.style.display = 'flex';
+    spawnConfetti();
+  }
+
+  function spawnConfetti() {
+    const colors = ['#e8637a','#f9a8b8','#ffd700','#c9956a','#b5ead7','#ff9999','#fff'];
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.setProperty('--dur2', (1.5 + Math.random() * 2) + 's');
+      c.style.setProperty('--delay2', (Math.random() * 1.5) + 's');
+      c.style.setProperty('--drift', (Math.random() * 200 - 100) + 'px');
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>
